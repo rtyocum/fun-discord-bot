@@ -45,6 +45,11 @@ exports.default = [
         name: "AMONG US",
         value: "🅰️",
         file: "amongus.mp3"
+    },
+    {
+        name: "Wet Ass Pussy",
+        value: "💧",
+        file: "wetasspussy.mp3"
     }
 ];
 //# sourceMappingURL=sounds.js.map
