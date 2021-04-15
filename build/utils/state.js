@@ -7,7 +7,7 @@ async function setState() {
     bot_1.dc.state.set('prefix', '..');
     bot_1.dc.state.set('portal', {
         state: false,
-        portalId: '772261353070002197',
+        portalId: '832340503697031220',
         privateId: '755580046541848646',
         privateChatId: '757316444102066197'
     });
