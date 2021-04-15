@@ -5,7 +5,14 @@ import { Message, MessageEmbed } from "discord.js";
 async function run(message: Message, _args: string[]) {
   const { data: json } = await axios.get('https://evilinsult.com/generate_insult.php?lang=en&type=json');
   if (message.mentions.everyone === true) {
-    message.channel.send(`@everyone ${json.insult}`);
+    const embed = new MessageEmbed()
+      .setTitle(`Insult #${json.number}`)
+      .setDescription(`@everyone ${json.insult}`)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL() as string);
+    let ping = await message.channel.send('@everyone');
+    message.channel.send(embed);
+    message.delete();
+    ping.delete();
   }
   else if ((message.mentions.users.size !== 0) || (message.mentions.roles.size !== 0)) {
     let roles = async function getRoles(): Promise<string[]> {

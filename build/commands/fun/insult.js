@@ -8,7 +8,14 @@ const discord_js_1 = require("discord.js");
 async function run(message, _args) {
     const { data: json } = await axios_1.default.get('https://evilinsult.com/generate_insult.php?lang=en&type=json');
     if (message.mentions.everyone === true) {
-        message.channel.send(`@everyone ${json.insult}`);
+        const embed = new discord_js_1.MessageEmbed()
+            .setTitle(`Insult #${json.number}`)
+            .setDescription(`@everyone ${json.insult}`)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL());
+        let ping = await message.channel.send('@everyone');
+        message.channel.send(embed);
+        message.delete();
+        ping.delete();
     }
     else if ((message.mentions.users.size !== 0) || (message.mentions.roles.size !== 0)) {
         let roles = async function getRoles() {
