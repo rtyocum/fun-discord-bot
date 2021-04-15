@@ -29,7 +29,7 @@ export class SoundBoard {
       .addFields(fields)
       .setThumbnail('https://cdn.dribbble.com/users/1614722/screenshots/4419914/soundboard_animatie__zwart__still_2x.gif')
       .setFooter('Click a reaction button to play a clip or ❌ to leave');
-    let chan = dc.channels.cache.get('807378069324038206') as TextChannel;
+    let chan = dc.channels.cache.get('832338903624843305') as TextChannel;
     let msg = await chan.send(embed);
     this.msgID = msg.id;
     sounds.forEach(async (sound: Sound) => {
