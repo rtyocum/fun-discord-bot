@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 
 
 async function run(message: Message, _args: string[]) {
@@ -18,7 +18,7 @@ async function run(message: Message, _args: string[]) {
     let users = async function getUsers(): Promise<string[]> {
       let user: string[] = [];
       await message.mentions.users.forEach(u => {
-        user.push(`<@${u.id}>`);
+        user.push(`<@!${u.id}>`);
       });
       return user;
     }
@@ -26,7 +26,14 @@ async function run(message: Message, _args: string[]) {
     let userArr = await users();
     let mentions = roleArr.concat(userArr);
     let mentionString = mentions.join(' ');
-    message.channel.send(`${mentionString} ${json.insult}`);
+    const embed = new MessageEmbed()
+      .setTitle(`Insult #${json.number}`)
+      .setDescription(`${mentionString} ${json.insult}`)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL() as string);
+    let ping = await message.channel.send(mentionString);
+    message.channel.send(embed);
+    message.delete();
+    ping.delete();
   }
   else {
     message.reply('No user was given');
