@@ -7,13 +7,15 @@ export class SoundBoard {
   public conn: VoiceConnection | undefined;
   public disp: StreamDispatcher | undefined;
   public msgID: string | undefined;
-  async setup(member: GuildMember) {
+  async setup(member?: GuildMember) {
     dc.emojis.cache.forEach(e => {
       if (e.name == 'one') {
         console.log(e);
       }
     })
-    if (!checkAdmin(member)) return;
+    if (member) {
+      if (!checkAdmin(member)) return;
+    }
     const sounds = require('../static/soundboard/sounds').default;
     let fields: Field[] = [];
     sounds.forEach((sound: Sound) => {

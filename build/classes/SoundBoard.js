@@ -11,8 +11,10 @@ class SoundBoard {
                 console.log(e);
             }
         });
-        if (!checkPerms_1.checkAdmin(member))
-            return;
+        if (member) {
+            if (!checkPerms_1.checkAdmin(member))
+                return;
+        }
         const sounds = require('../static/soundboard/sounds').default;
         let fields = [];
         sounds.forEach((sound) => {
