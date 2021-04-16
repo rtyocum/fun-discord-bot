@@ -9,10 +9,8 @@ async function run(message: Message, _args: string[]) {
       .setTitle(`Insult #${json.number}`)
       .setDescription(`@everyone ${json.insult}`)
       .setAuthor(message.author.tag, message.author.displayAvatarURL() as string);
-    let ping = await message.channel.send('@everyone');
     message.channel.send(embed);
     message.delete();
-    ping.delete();
   }
   else if ((message.mentions.users.size !== 0) || (message.mentions.roles.size !== 0)) {
     let roles = async function getRoles(): Promise<string[]> {
@@ -37,10 +35,8 @@ async function run(message: Message, _args: string[]) {
       .setTitle(`Insult #${json.number}`)
       .setDescription(`${mentionString} ${json.insult}`)
       .setAuthor(message.author.tag, message.author.displayAvatarURL() as string);
-    let ping = await message.channel.send(mentionString);
     message.channel.send(embed);
     message.delete();
-    ping.delete();
   }
   else {
     message.reply('No user was given');
