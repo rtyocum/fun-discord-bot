@@ -1,17 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setState = void 0;
+exports.updateCache = exports.setState = void 0;
 const bot_1 = require("../bot");
-async function setState() {
-    bot_1.dc.state.set('guildId', '692792802009939971');
-    bot_1.dc.state.set('prefix', '..');
-    bot_1.dc.state.set('portal', {
-        state: false,
-        portalId: '832340503697031220',
-        privateId: '755580046541848646',
-        privateChatId: '757316444102066197'
+const config_1 = require("../db/models/config");
+async function setState(key, value) {
+    bot_1.dc.state.set(key, value);
+    config_1.config.update({ configValue: value }, {
+        where: {
+            configName: key
+        }
     });
-    bot_1.dc.state.set('dungon', '757316444102066197');
 }
 exports.setState = setState;
+async function updateCache() {
+    bot_1.dc.state.clear();
+    let updatedConfig = await config_1.config.findAll();
+    updatedConfig.forEach(async (c) => {
+        bot_1.dc.state.set(c.get('configName'), c.get('configValue'));
+    });
+}
+exports.updateCache = updateCache;
 //# sourceMappingURL=state.js.map

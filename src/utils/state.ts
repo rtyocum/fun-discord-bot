@@ -1,13 +1,20 @@
 import { dc } from "../bot";
+import { config } from "../db/models/config";
 
-export async function setState() {
-  dc.state.set('guildId', '692792802009939971');
-  dc.state.set('prefix', '..');
-  dc.state.set('portal', {
-    state: false,
-    portalId: '832340503697031220',
-    privateId: '755580046541848646',
-    privateChatId: '757316444102066197'
+export async function setState(key: string, value: string) {
+  dc.state.set(key, value);
+  config.update({ configValue: value }, {
+    where: {
+      configName: key
+    }
   });
-  dc.state.set('dungon', '757316444102066197');
+}
+
+
+export async function updateCache() {
+  dc.state.clear();
+  let updatedConfig = await config.findAll();
+  updatedConfig.forEach(async (c) => {
+    dc.state.set(c.get('configName') as string, c.get('configValue') as string);
+  });
 }

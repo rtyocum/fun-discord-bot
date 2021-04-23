@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bot_1 = require("../../bot");
 let event = 'voiceStateUpdate';
 async function run(_oldState, newState) {
-    const portal = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portal').portalId);
-    const privateChan = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portal').privateId);
+    const portal = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portalId'));
+    const privateChan = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portalPrivateId'));
     if (!portal)
         return;
     if (newState.channelID != portal.id)
         return;
-    if (!bot_1.dc.state.get('portal').state)
+    if (bot_1.dc.state.get('portalState') !== 'true')
         return;
     if (typeof privateChan === 'undefined')
         return;

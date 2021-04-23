@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { dc } from "../../bot";
 import { checkAdmin } from "../../utils/checkPerms";
+import { setState } from "../../utils/state";
 
 async function run(message: Message, args: string[]) {
   let prefix = args.join(' ');
@@ -13,7 +13,7 @@ async function run(message: Message, args: string[]) {
     message.reply('No prefix was given')
     return;
   }
-  dc.state.set('prefix', prefix);
+  setState('prefix', prefix);
   message.reply('The prefix has been updated');
 }
 

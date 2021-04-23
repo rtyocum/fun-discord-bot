@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const bot_1 = require("../../bot");
 const checkPerms_1 = require("../../utils/checkPerms");
+const state_1 = require("../../utils/state");
 let aliases = ['p'];
 async function run(message, args) {
-    const portal = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portal').portalId);
-    const privateChan = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portal').privateId);
+    const portal = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portalId'));
+    const privateChan = bot_1.dc.channels.cache.get(bot_1.dc.state.get('portalPrivateId'));
     if (!message.member)
         return;
     if (!portal)
@@ -15,7 +16,7 @@ async function run(message, args) {
         return;
     }
     if (args.join(' ') == 'open') {
-        bot_1.dc.state.get('portal').state = true;
+        state_1.setState('portalState', 'true');
         message.reply('The Portal has been opened');
         let mems = portal.members;
         mems.forEach(e => {
@@ -23,7 +24,7 @@ async function run(message, args) {
         });
     }
     else if (args.join(' ') == 'close') {
-        bot_1.dc.state.get('portal').state = false;
+        state_1.setState('portalState', 'false');
         message.reply('The Portal has been closed');
     }
     else {

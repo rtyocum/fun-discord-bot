@@ -1,18 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.soundboard = void 0;
+exports.config = void 0;
 const sequelize_1 = require("sequelize");
 const bot_1 = require("../../bot");
-exports.soundboard = bot_1.db.define('soundboard', {
-    Name: {
+exports.config = bot_1.db.define('config', {
+    configName: {
         type: sequelize_1.DataTypes.TEXT,
         allowNull: false
     },
-    Value: {
-        type: sequelize_1.DataTypes.TEXT,
-        allowNull: false
-    },
-    File: {
+    configValue: {
         type: sequelize_1.DataTypes.TEXT,
         allowNull: false
     }
@@ -20,4 +16,4 @@ exports.soundboard = bot_1.db.define('soundboard', {
     freezeTableName: true,
     timestamps: false
 });
-//# sourceMappingURL=soundboard.js.map
+//# sourceMappingURL=config.js.map

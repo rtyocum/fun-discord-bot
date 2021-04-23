@@ -1,12 +1,13 @@
 import { Message, VoiceChannel } from "discord.js";
 import { dc } from "../../bot";
 import { checkDungon } from "../../utils/checkPerms";
+import { setState } from "../../utils/state";
 
 let aliases = ['p']
 
 async function run(message: Message, args: string[]) {
-  const portal = dc.channels.cache.get(dc.state.get('portal').portalId) as VoiceChannel;
-  const privateChan = dc.channels.cache.get(dc.state.get('portal').privateId) as VoiceChannel;
+  const portal = dc.channels.cache.get(dc.state.get('portalId')) as VoiceChannel;
+  const privateChan = dc.channels.cache.get(dc.state.get('portalPrivateId')) as VoiceChannel;
   if (!message.member) return;
   if (!portal) return;
   if (!checkDungon(message.member)) {
@@ -14,7 +15,7 @@ async function run(message: Message, args: string[]) {
     return;
   }
   if (args.join(' ') == 'open') {
-    dc.state.get('portal').state = true;
+    setState('portalState', 'true');
     message.reply('The Portal has been opened');
     let mems = portal.members;
     mems.forEach(e => {
@@ -22,7 +23,7 @@ async function run(message: Message, args: string[]) {
     });
   }
   else if (args.join(' ') == 'close') {
-    dc.state.get('portal').state = false;
+    setState('portalState', 'false');
     message.reply('The Portal has been closed');
   }
   else {

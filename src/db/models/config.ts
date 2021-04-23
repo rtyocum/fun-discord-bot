@@ -1,16 +1,12 @@
 import { DataTypes } from "sequelize";
 import { db } from "../../bot";
 
-export const soundboard = db.define('soundboard', {
-  Name: {
+export const config = db.define('config', {
+  configName: {
     type: DataTypes.TEXT,
     allowNull: false
   },
-  Value: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  File: {
+  configValue: {
     type: DataTypes.TEXT,
     allowNull: false
   }

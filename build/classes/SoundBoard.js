@@ -6,21 +6,17 @@ const bot_1 = require("../bot");
 const checkPerms_1 = require("../utils/checkPerms");
 class SoundBoard {
     async setup(member) {
-        bot_1.dc.emojis.cache.forEach(e => {
-            if (e.name == 'one') {
-                console.log(e);
-            }
-        });
         if (member) {
             if (!checkPerms_1.checkAdmin(member))
                 return;
         }
-        const sounds = require('../static/soundboard/sounds').default;
+        const { soundboard } = require('../db/models/soundboard');
+        this.sounds = await soundboard.findAll();
         let fields = [];
-        sounds.forEach((sound) => {
+        this.sounds.forEach(async (sound) => {
             fields.push({
-                name: sound.name,
-                value: sound.value,
+                name: sound.get('Name'),
+                value: sound.get('Value'),
                 inline: true
             });
         });
@@ -33,8 +29,8 @@ class SoundBoard {
         let chan = bot_1.dc.channels.cache.get('832338903624843305');
         let msg = await chan.send(embed);
         this.msgID = msg.id;
-        sounds.forEach(async (sound) => {
-            msg.react(sound.value);
+        this.sounds.forEach(async (sound) => {
+            msg.react(sound.get('Value'));
         });
         msg.react('❌');
     }

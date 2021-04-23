@@ -1,27 +1,25 @@
 import { GuildMember, MessageEmbed, StreamDispatcher, TextChannel, VoiceChannel, VoiceConnection } from "discord.js";
+import { Model, ModelCtor } from "sequelize/types";
 import { dc } from "../bot";
-import { Field, Sound } from "../interfaces/Sound";
+import { Field } from "../interfaces/Sound";
 import { checkAdmin } from "../utils/checkPerms";
 
 export class SoundBoard {
-  public conn: VoiceConnection | undefined;
-  public disp: StreamDispatcher | undefined;
-  public msgID: string | undefined;
+  public conn?: VoiceConnection;
+  public disp?: StreamDispatcher;
+  public msgID?: string;
+  public sounds?: Model<any, any>[];
   async setup(member?: GuildMember) {
-    dc.emojis.cache.forEach(e => {
-      if (e.name == 'one') {
-        console.log(e);
-      }
-    })
     if (member) {
       if (!checkAdmin(member)) return;
     }
-    const sounds = require('../static/soundboard/sounds').default;
+    const { soundboard }: { soundboard: ModelCtor<Model<any, any>> } = require('../db/models/soundboard');
+    this.sounds = await soundboard.findAll();
     let fields: Field[] = [];
-    sounds.forEach((sound: Sound) => {
+    this.sounds.forEach(async (sound: Model) => {
       fields.push({
-        name: sound.name,
-        value: sound.value,
+        name: sound.get('Name') as string,
+        value: sound.get('Value') as string,
         inline: true
       })
     });
@@ -34,8 +32,8 @@ export class SoundBoard {
     let chan = dc.channels.cache.get('832338903624843305') as TextChannel;
     let msg = await chan.send(embed);
     this.msgID = msg.id;
-    sounds.forEach(async (sound: Sound) => {
-      msg.react(sound.value);
+    this.sounds.forEach(async (sound) => {
+      msg.react(sound.get('Value') as string);
     });
     msg.react('❌');
   }

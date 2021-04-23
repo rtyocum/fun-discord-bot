@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const bot_1 = require("../../bot");
 const checkPerms_1 = require("../../utils/checkPerms");
+const state_1 = require("../../utils/state");
 async function run(message, args) {
     let prefix = args.join(' ');
     if (!message.member)
@@ -14,7 +14,7 @@ async function run(message, args) {
         message.reply('No prefix was given');
         return;
     }
-    bot_1.dc.state.set('prefix', prefix);
+    state_1.setState('prefix', prefix);
     message.reply('The prefix has been updated');
 }
 module.exports = {
