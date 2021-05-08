@@ -9,6 +9,7 @@ export class SoundBoard {
   public disp?: StreamDispatcher;
   public msgID?: string;
   public sounds?: Model<any, any>[];
+  public interval?: NodeJS.Timeout;
   async setup(member?: GuildMember) {
     if (member) {
       if (!checkAdmin(member)) return;
@@ -45,6 +46,7 @@ export class SoundBoard {
     this.conn = await chan.join();
     this.conn.on('disconnect', () => {
       this.conn = undefined;
+      clearInterval(this.interval as NodeJS.Timeout);
     })
   }
 
@@ -52,11 +54,24 @@ export class SoundBoard {
     if (!this.conn) {
       await this.join(member);
     }
+    if (this.interval) {
+      console.log('clear')
+      clearInterval(this.interval as NodeJS.Timeout);
+    }
     this.disp = this.conn?.play(sound, { volume: 0.5 });
+    console.log('start');
     if (!this.disp) return;
     this.disp.on('finish', () => {
       this.disp?.destroy();
       this.disp = undefined;
+      console.log('finish');
+      this.interval = setInterval(async () => {
+        if (this.conn) {
+          this.conn.disconnect();
+          this.conn = undefined;
+        }
+        clearInterval(this.interval as NodeJS.Timeout);
+      }, 900000);
     });
   }
 
@@ -69,5 +84,6 @@ export class SoundBoard {
       this.conn.disconnect();
       this.conn = undefined;
     }
+    clearInterval(this.interval as NodeJS.Timeout);
   }
 }

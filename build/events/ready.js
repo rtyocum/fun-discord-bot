@@ -7,7 +7,6 @@ async function run() {
     if (!bot_1.dc.user)
         return;
     bot_1.dc.user.setActivity('Commands', { type: 'LISTENING' });
-    bot_1.dc.user.setStatus('dnd');
     await state_1.updateCache();
     console.log(bot_1.dc.state);
 }

@@ -42,18 +42,32 @@ class SoundBoard {
         this.conn = await chan.join();
         this.conn.on('disconnect', () => {
             this.conn = undefined;
+            clearInterval(this.interval);
         });
     }
     async play(member, sound) {
         if (!this.conn) {
             await this.join(member);
         }
+        if (this.interval) {
+            console.log('clear');
+            clearInterval(this.interval);
+        }
         this.disp = this.conn?.play(sound, { volume: 0.5 });
+        console.log('start');
         if (!this.disp)
             return;
         this.disp.on('finish', () => {
             this.disp?.destroy();
             this.disp = undefined;
+            console.log('finish');
+            this.interval = setInterval(async () => {
+                if (this.conn) {
+                    this.conn.disconnect();
+                    this.conn = undefined;
+                }
+                clearInterval(this.interval);
+            }, 900000);
         });
     }
     async stop() {
@@ -64,6 +78,7 @@ class SoundBoard {
             this.conn.disconnect();
             this.conn = undefined;
         }
+        clearInterval(this.interval);
     }
 }
 exports.SoundBoard = SoundBoard;
