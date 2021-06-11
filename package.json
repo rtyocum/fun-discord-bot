@@ -4,7 +4,7 @@
   "description": "The main bot for the GULAG Discord server",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start ecosystem.config.js",
+    "start": "pm2 start ecosystem.config.js --env production",
     "build": "tsc",
     "pack": "git add . & git commit -S & git push origin main",
     "deploy": "git pull origin main && ./deploy.sh && pm2 restart 0",
