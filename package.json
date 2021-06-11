@@ -32,6 +32,7 @@
     "axios": "^0.21.1",
     "discord.js": "^12.5.0",
     "ffmpeg-static": "^4.2.7",
+    "pm2": "^5.1.0",
     "sequelize": "^6.6.2",
     "sqlite3": "^5.0.2"
   }
