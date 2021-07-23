@@ -104,8 +104,8 @@ dist
 .tern-port
 
 #SQLite Files
-.sqlite
-.sqlite3
+*.sqlite
+*.sqlite3
 
 #Build Directory
 build/
