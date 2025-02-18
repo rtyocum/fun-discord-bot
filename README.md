@@ -1,4 +1,4 @@
-# My Discord Bot 
+# Fun Discord Bot 
 Functional and fun discord bot. Includes some cool fun commands and features, as well as a soundboard, before discord added the feature.
 
 ## Introduction
