@@ -1,8 +1,8 @@
-# GULAG-Bot
-The main bot for the GULAG Discord server
+# My Discord Bot 
+Functional and fun discord bot. Includes some cool fun commands and features, as well as a soundboard, before discord added the feature.
 
 ## Introduction
-This is the code for the GULAG Bot. Please let me know if you would like to help. Feel free to submit changes.
+This is the code for the bot. Please let me know if you would like to help. Feel free to submit changes.
 
 ## Running
 Run `npm install` to install dependencies

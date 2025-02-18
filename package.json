@@ -1,7 +1,7 @@
 {
-  "name": "gulagbot",
+  "name": "fundiscordbot",
   "version": "1.0.0",
-  "description": "The main bot for the GULAG Discord server",
+  "description": "Functional and fun discord bot.",
   "main": "index.js",
   "scripts": {
     "start": "pm2 start ecosystem.config.js --env production",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtyocum/gulagbot.git"
+    "url": "git+https://github.com/rtyocum/fun-discord-bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rtyocum/gulagbot/issues"
+    "url": "https://github.com/rtyocum/fun-discord-bot/issues"
   },
-  "homepage": "https://github.com/rtyocum/gulagbot#readme",
+  "homepage": "https://github.com/rtyocum/fun-discord-bot#readme",
   "devDependencies": {
     "@types/node": "^14.14.21",
     "dotenv": "^8.2.0",
